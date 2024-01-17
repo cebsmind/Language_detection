@@ -1,0 +1,54 @@
+/* static/css/main.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 20px;
+    text-align: center;
+    background-color: #f8f9fa; /* Ajout d'une couleur de fond */
+}
+
+h1 {
+    color: #007bff; /* Changement de couleur pour plus de visibilité */
+}
+
+form {
+    margin-top: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #333;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #28a745; /* Changement de couleur du bouton */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #218838; /* Changement de couleur au survol du bouton */
+}
+
+p {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+}
