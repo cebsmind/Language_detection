@@ -158,3 +158,97 @@ print("Best Cross-Validated Accuracy:", grid_search.best_score_)
 We get :
 
 ![image](https://github.com/cebsmind/Language_detection/assets/154905924/2e6545e2-9aa1-41f4-8f14-9f0a5f3c47f8)
+
+We can see that our model perform pretty good with a simple approach. However we see that some languages performs poorly. Like `Chinese`, `Japanese` and `Arabic`. This can be explained by the complexity of theses languages, wheras latin language are less complex. So our method has his limits, but it's still a good start.
+
+## Evaluate on test sets
+We can now evaluate our model on the test set (a set that our model never seen) 
+```python
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Utiliser le même label encoder pour inverser la transformation
+y_test_original = label_encoder.inverse_transform(y_test_encoded).ravel()
+
+# Faire des prédictions sur l'ensemble de test
+y_test_pred = best_nb_classifier.predict(X_test_tfidf)
+
+# Calculer la matrice de confusion
+conf_matrix = confusion_matrix(y_test_original, y_test_pred)
+
+# Afficher la matrice de confusion sous forme de heatmap
+plt.figure(figsize=(15, 10))
+sns.heatmap(conf_matrix, annot=True, fmt="d", cmap="Blues", xticklabels=language_classes, yticklabels=language_classes)
+plt.title("Matrice de Confusion")
+plt.xlabel("Valeurs Prédites")
+plt.ylabel("Valeurs Réelles")
+plt.show()
+```
+
+We get :
+
+![image](https://github.com/cebsmind/Language_detection/assets/154905924/51c065c8-86c6-4f7c-89de-6d4886e613ad)
+
+Not bad ! We see that our model struggled with `Chinese` (he often predict them `Portugese`) and also with `Spanish` he also predict them `Portuguese`
+But overall we have a good accuracy.
+
+## Single text predictions
+If we want to use our model to predict words we want, we can do it like this : 
+```python
+#function to predict language
+def predict_language(new_text):
+    # Prétraiter le nouveau texte de la même manière que vos données d'entraînement
+    cleaned_text = clean_text(new_text)
+
+    # Vectoriser le texte avec le même vectoriseur BoW que celui utilisé lors de l'entraînement
+    text_vectorized = tfidf_vectorizer.transform([cleaned_text])
+
+    # Faire la prédiction avec le modèle entraîné
+    predicted_language = best_nb_classifier.predict(text_vectorized)
+
+    return predicted_language[0]
+
+# Listes de textes de test pour chaque langue
+test_texts = {
+    'Arabic': 'مرحبًا بك في عالم البرمجة',
+    'Bulgarian': 'Здравейте, свят!',
+    'German': 'Hallo Welt!',
+    'Modern Greek': 'Καλημέρα κόσμε!',
+    'English': 'Hello, world!',
+    'Spanish': '¡Hola mundo!',
+    'French': 'Bonjour tout le monde !',
+    'Hindi': 'नमस्ते दुनिया!',
+    'Italian': 'Ciao mondo!',
+    'Japanese': 'こんにちは、世界！',
+    'Dutch': 'Hallo wereld!',
+    'Polish': 'Witaj świecie!',
+    'Portuguese': 'Olá mundo!',
+    'Russian': 'Привет, мир!',
+    'Swahili': 'Habari dunia!',
+    'Thai': 'สวัสดี, โลก!',
+    'Turkish': 'Merhaba dünya!',
+    'Urdu': 'ہیلو دنیا!',
+    'Vietnamese': 'Chào thế giới!',
+    'Chinese': '你好，世界！'
+}
+
+true_labels = list(test_texts.keys())
+predicted_labels = [predict_language(text) for text in test_texts.values()]
+
+accuracy = accuracy_score(true_labels, predicted_labels)
+recall = recall_score(true_labels, predicted_labels, average='weighted')  # utilisez 'weighted' si les classes ne sont pas équilibrées
+precision = precision_score(true_labels, predicted_labels, average='weighted')
+f1 = f1_score(true_labels, predicted_labels, average='weighted')
+
+print("Accuracy:", accuracy)
+print("Recall:", recall)
+print("Precision:", precision)
+print("F1 Score:", f1)
+
+```
+We get :
+- Accuracy: 0.85
+- Recall: 0.85
+- Precision: 0.775
+- F1 Score: 0.8
