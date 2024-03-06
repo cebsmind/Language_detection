@@ -1,0 +1,106 @@
+/* static/css/main.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 20px;
+    text-align: center;
+    background-color: #f8f9fa; /* Ajout d'une couleur de fond */
+}
+
+h1 {
+    color: #007bff; /* Changement de couleur pour plus de visibilité */
+}
+
+form {
+    margin-top: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #333;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #28a745; /* Changement de couleur du bouton */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #218838; /* Changement de couleur au survol du bouton */
+}
+
+/* Style for Detected Language and History */
+.alert-success {
+    background-color: #d4edda; /* Background color for success alert */
+    color: #155724; /* Text color for success alert */
+    padding: 15px;
+    margin-top: 20px;
+    border: 1px solid #c3e6cb; /* Border color for success alert */
+    border-radius: 4px;
+}
+
+/* Style for History entries */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    background-color: #d4edda; /* Background color for history entry */
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #c3e6cb; /* Border color for history entry */
+    border-radius: 4px;
+    text-align: left;
+}
+
+ul li strong {
+    font-weight: bold;
+    color: #155724; /* Text color for strong elements in history entry */
+}
+
+/* Fichier main.css */
+
+.brand-title {
+    font-family: 'Your Custom Font', sans-serif; /* Utilisez une police de caractères personnalisée si vous le souhaitez */
+    font-size: 1.5rem; /* Taille de la police */
+    font-weight: bold; /* Gras pour l'accent */
+    color: #ffcc00; /* Couleur du texte (jaune dans cet exemple) */
+    /* Ajoutez d'autres styles personnalisés au besoin */
+}
+
+.brand-title {
+    font-family: 'Your Custom Font', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #000000; /* Couleur du texte (jaune dans cet exemple) */
+    margin-right: 20px; /* Espacement entre les boutons */
+    transition: color 0.3s; /* Transition de couleur au survol */
+}
+
+.brand-title:hover {
+    color: #2a1edb; /* Nouvelle couleur au survol (blanc dans cet exemple) */
+}
+
+/* Style pour les boutons au survol */
+.navbar-brand:hover {
+    text-decoration: underline; /* Souligner le texte au survol */
+}
