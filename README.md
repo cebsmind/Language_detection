@@ -1,5 +1,5 @@
 # Project : Language Detection 
-This is my first project in Data Science. The goal was to create a Machine Learning model using NLP to detect the language input. I also created a small web site and deployed it via pythonanywhere.com so everyone can acces it for free as it's a small app.
+This marks my inaugural venture into the realm of Data Science. The primary objective was to craft a Machine Learning model utilizing Natural Language Processing (NLP) for the purpose of language detection. In tandem with this, a compact website was developed and subsequently deployed on pythonanywhere.com, ensuring free accessibility to all users given the modest scale of the application.
 
 # App preview 
 You can acces to the site here :  [MySite](https://cebsmind.pythonanywhere.com/) 
@@ -30,13 +30,16 @@ However, if the word **Bug** appears many times in a document, while not appeari
 
 # How to build a model ?
 ## Pre process 
-First thing we need to do is to process our data so it can be understand by our computer, because computer can't really read text, only numbers.
+The initial step in constructing our model involves processing the data to make it understandable to our computer. Computers inherently struggle with interpreting raw text, necessitating conversion into a numerical format.
+
 ### Ovieview of our data set : 
 
 ![image](https://github.com/cebsmind/Language_detection/assets/154905924/03872b82-dda0-4bb9-bbd5-d41b1ee192ef)
 
-For each sentence we have the language label. 
-- First I decided to map every language label to the language name, this can be done like this : 
+Each sentence in our dataset is accompanied by a language label.
+
+The first preprocessing task involves mapping each language label to its respective language name. This can be achieved as follows:
+
 ```python
 # Define the mapping dictionary
 language_mapping = {
@@ -68,7 +71,8 @@ df_val['labels'] = df_val['labels'].map(language_mapping)
 df_test['labels'] = df_test['labels'].map(language_mapping)
 ```
 
-- Next we need to labelize every language to a number from 1-20 (we have 20 languages)
+Subsequently, we proceed to label each language with a corresponding numerical identifier ranging from 1 to 20, as there are a total of 20 languages in our dataset.
+
 ```python
 from sklearn.preprocessing import LabelEncoder
 # Initialize the label encoder
@@ -82,7 +86,7 @@ y_val_encoded = label_encoder.transform(y_val).ravel()
 y_test_encoded = label_encoder.transform(y_test).ravel()
 ```
 
-- Create a function to clean text
+Develop a function to cleanse the text data
 
 ```python
 def clean_text(text):
@@ -94,9 +98,9 @@ def clean_text(text):
     text = re.sub(r'\[', ' ', text)
     return text
 ```
-In this code we decide to remove punctuation and numbers it's irelevant for our language detection, we only need words.
+In the following code, we opt to eliminate punctuation and numbers as they are deemed irrelevant for our language detection task. Our focus lies solely on words.
 
-- Vectorize our text data with TF-IDF vectorizer & save it
+Subsequently, we proceed to vectorize our text data using the TF-IDF vectorizer and save the resulting vectors.
 
 ```python
 # Créez une instance de TfidfVectorizer
@@ -113,14 +117,15 @@ X_test_tfidf = tfidf_vectorizer.transform(X_test)
 joblib.dump(tfidf_vectorizer, 'model/TF-IDF.pkl')
 ```
 
-# Modelisation
-For text classification, Naives Bayes Classifier is a really good algorithms
+# Model Building
+In the realm of text classification, the Naive Bayes Classifier emerges as a highly effective algorithm.
 
 ### Overview 
 The Naïve Bayes classifier is a supervised machine learning algorithm that is used for classification tasks such as text classification. They use principles of probability to perform classification tasks.
 Naïve Bayes is part of a family of generative learning algorithms, meaning that it seeks to model the distribution of inputs of a given class or category. Unlike discriminative classifiers, like logistic regression, it does not learn which features are most important to differentiate between classes.
 
-We can chose the best hyperparameters for this model using a grid search, and evaluate our model on the validation set using accuracy, recall & f1 score. This can be done easily :
+We can select the optimal hyperparameters for our model through a grid search and evaluate its performance on the validation set using metrics such as accuracy, recall, and F1 score. This process can be effortlessly executed as follows:
+
 ```python
 # Define the hyperparameter grid
 param_grid = {
@@ -159,10 +164,11 @@ We get :
 
 ![image](https://github.com/cebsmind/Language_detection/assets/154905924/2e6545e2-9aa1-41f4-8f14-9f0a5f3c47f8)
 
-We can see that our model perform pretty good with a simple approach. However we see that some languages performs poorly. Like `Chinese`, `Japanese` and `Arabic`. This can be explained by the complexity of theses languages, wheras latin language are less complex. So our method has his limits, but it's still a good start.
+"We observe that our model performs admirably well with a straightforward approach. However, there are certain languages, such as **Chinese**, **Japanese**, and **Arabic**, that exhibit lower performance. This can be attributed to the inherent complexity of these languages, in contrast to the relatively simpler structure of Latin languages. Thus, our method has its limitations, yet it marks a promising beginning
 
 ## Evaluate on test sets
-We can now evaluate our model on the test set (a set that our model never seen) 
+Our next step involves evaluating the model on the test set, a dataset that the model has never encountered during training.
+
 ```python
 from sklearn.metrics import confusion_matrix
 import seaborn as sns
@@ -190,11 +196,11 @@ We get :
 
 ![image](https://github.com/cebsmind/Language_detection/assets/154905924/51c065c8-86c6-4f7c-89de-6d4886e613ad)
 
-Not bad ! We see that our model struggled with `Chinese` (he often predict them `Portugese`) and also with `Spanish` he also predict them `Portuguese`
-But overall we have a good accuracy.
+Not bad! It's evident that our model encounters challenges, particularly with Chinese (frequently misclassified as Portuguese) and Spanish (occasionally misclassified as Portuguese). Despite these challenges, our overall accuracy remains commendable.
 
 ## Single text predictions
-If we want to use our model to predict words we want, we can do it like this : 
+For individual text predictions, we can employ the following approach:"
+ 
 ```python
 #function to predict language
 def predict_language(new_text):
@@ -253,7 +259,7 @@ We get :
 - Precision: 0.775
 - F1 Score: 0.8
 
-Some improvement can be done, but this project goal is to start with a basic approach and even though is really simple it achieve good accuracy to predict the language.
+Although there is room for improvement, the primary objective of this project was to initiate with a basic approach. Despite its simplicity, the model has demonstrated commendable accuracy in predicting language.
 
 ### Save model
 ```python
@@ -296,8 +302,9 @@ flask-app/
 - `python main.py`
 - open http://127.0.0.1:5000/
 
-As you can see, I also created a Dockerfile. Why ? 
-The concept of Docker for Data Science is to help developers develop and ship their code easily, in the form of containers. These containers can be deployed anywhere, making the process of setting up a project much simpler, ensuring consistency and reproducibility across different environments.
+As illustrated, I've also included a Dockerfile. Why?
 
-# Conclusion 
-This first project was a first step for using NLP techniques and Machine Learning to predict language detection. We saw that even though it's a simple method it works pretty well. Of course improvement can be done, but the goal was to initiate with Data Science techniques, and model deployment. 
+- The incorporation of Docker in Data Science serves to facilitate developers in crafting and delivering their code seamlessly, encapsulated within containers. These containers are highly versatile, allowing deployment across various environments and streamlining project setup. This fosters consistency and reproducibility.
+
+# Conclusion
+This inaugural project served as a foundational step into the realm of Natural Language Processing (NLP) and Machine Learning for language detection. Despite its simplicity, the method employed has demonstrated effectiveness. While there is room for enhancement, the primary goal was to initiate the exploration of Data Science techniques and model deployment.
