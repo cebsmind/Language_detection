@@ -262,3 +262,42 @@ joblib.dump(best_nb_classifier, 'model/LanguageDetection.joblib')
 ```
 
 # Set up flask app
+Set up your folders like this : 
+```plaintext
+flask-app/
+│
+├── model/
+│   ├── LanguageDetection.joblib
+│   └── TF-IDF.pkl
+│
+├── static/
+│   │ 
+│   ├── css/
+│   │   ├── main.css
+│   │   
+│   └── js/
+│       └── backgroundAnimation.js
+│
+├── templates/
+│      ├── about_me.html
+│      └── base.html
+│      └── index.html
+│
+├── main.py
+├── requirements.txt
+├── Dockerfile
+├── .dockerignore
+```
+#### Install dependencies 
+- `python -m venv env`
+- `.env/Scripts/activate`
+- `pip install -r requirements.txt`
+#### Run in terminal 
+- `python main.py`
+- open http://127.0.0.1:5000/
+
+As you can see, I also created a Dockerfile. Why ? 
+The concept of Docker for Data Science is to help developers develop and ship their code easily, in the form of containers. These containers can be deployed anywhere, making the process of setting up a project much simpler, ensuring consistency and reproducibility across different environments.
+
+# Conclusion 
+This first project was a first step for using NLP techniques and Machine Learning to predict language detection. We saw that even though it's a simple method it works pretty well. Of course improvement can be done, but the goal was to initiate with Data Science techniques, and model deployment. 
