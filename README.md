@@ -252,3 +252,13 @@ We get :
 - Recall: 0.85
 - Precision: 0.775
 - F1 Score: 0.8
+
+Some improvement can be done, but this project goal is to start with a basic approach and even though is really simple it achieve good accuracy to predict the language.
+
+### Save model
+```python
+# Save the best_nb_classifier model to a file
+joblib.dump(best_nb_classifier, 'model/LanguageDetection.joblib')
+```
+
+# Set up flask app
